@@ -1,31 +1,52 @@
 package com.company;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class FibonacciMod {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        String n = in.next();
+        BigInteger n = new BigInteger(in.next());
         int mod = in.nextInt();
-        System.out.println(fibMod(new BigInteger(n), mod));
+        System.out.println(fibMod(n, mod));
     }
 
-    public static BigInteger fibMod(BigInteger n, int mod) {
-        BigInteger f0 = new BigInteger("0");
-        BigInteger f1 = new BigInteger("1");
+    public static int fibMod(BigInteger n, int mod) {
 
-        if (n.compareTo(new BigInteger("0")) == 0) return f0.mod(BigInteger.valueOf(mod));
-        if (n.compareTo(new BigInteger("1")) == 0) return f1.mod(BigInteger.valueOf(mod));
+        int f0 = 0;
+        int f1 = 1;
 
-        BigInteger fn = new BigInteger("0");
+        List<Integer> rests = new ArrayList<>();
+        rests.add(f0);
+        rests.add(f1);
 
-        for (BigInteger i = new BigInteger("1"); i.compareTo(n) == -1; i = i.add(BigInteger.ONE)) {
-            fn = (f0.add(f1)).mod(BigInteger.valueOf(mod));
+        if (n.equals(BigInteger.ZERO)) {
+            return 0;
+        }
+
+        if (n.equals(BigInteger.ONE)) {
+            if (mod == 1) {return 0;}
+
+            return 1;
+        }
+
+        int fn;
+        for (int i = 1; i < Integer.MAX_VALUE; i++) {
+            fn = (f0 + f1) % mod;
             f0 = f1;
             f1 = fn;
+            if (f0 == 0 && f1 == 1) {
+                rests.remove(rests.size() - 1);
+                break;
+            } else {
+                rests.add(fn);
+            }
         }
-        return fn;
+
+        int offset = n.mod(BigInteger.valueOf(rests.size())).intValue();
+        return rests.get(offset);
     }
 }
