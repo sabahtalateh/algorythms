@@ -50,16 +50,10 @@ public class Main {
                     intersects.add(nxt);
                     nxtIdx++;
                 }
-
             }
 
             Optional<Segment> minEnd = intersects.stream().min((Comparator.comparingLong(o -> o.end)));
-            for (Segment s : intersects) {
-                s.hasPoint = true;
-            }
-            if (minEnd.isPresent()) {
-                points.add(minEnd.get().end);
-            }
+            minEnd.ifPresent(segment -> points.add(segment.end));
             curIdx += intersects.size();
         }
 
@@ -70,25 +64,17 @@ public class Main {
     }
 
     class Segment {
-        public long start;
-        public long end;
+        long start;
+        long end;
 
-        public boolean hasPoint;
-
-        public Segment(long start, long end) {
+        Segment(long start, long end) {
             this.start = start;
             this.end = end;
-            hasPoint = false;
         }
 
         @Override
         public String toString() {
-            String out = "[" + start + " : " + end;
-            if (hasPoint) {
-                out += " : * ";
-            }
-            out += "]";
-            return out;
+            return "[" + start + " : " + end + "]";
         }
     }
 }
