@@ -45,7 +45,7 @@ public class Main {
         System.out.println(f1);
         System.out.println(f2);
 
-        
+
 
 //        for (int i = 0; i < freqs.size() * 2 - 1; i++) {
 //
