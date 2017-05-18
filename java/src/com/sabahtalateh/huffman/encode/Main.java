@@ -1,6 +1,5 @@
-package com.sabahtalateh.huffman;
+package com.sabahtalateh.huffman.encode;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
